@@ -9,13 +9,17 @@ function App() {
   //2.If username gonna become controlled Input , why it need to be like that?
   const [userdata, Setuserdata] = useState([]);
   const [loading, Setloading] = useState(false);
+  const [search,Setsearch] = useState("")
 
   useEffect(() => {
+    if(!search) return;
+    Setloading(true);
     fetch(`https://api.github.com/users/${username}`)
       .then((res) => res.json())
-      .then((data) => Setuserdata(data));
-      Setloading(false)
-  }, [username]);
+      .then((data) =>{ Setuserdata(data)
+        Setloading(false)
+      });
+  }, [search]);
 
   return (
     <div>
@@ -30,7 +34,7 @@ function App() {
       />
       <br />
       <br />
-      <button onClick={() => Setloading(true)}>Submit</button>
+      <button onClick={() =>Setsearch(username)}>Submit</button>
       <br />
       <br />
       <br />
